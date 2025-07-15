@@ -1,3 +1,4 @@
+import { Providers } from "@/lib/providers";
 import type { Metadata } from "next";
 import "../ui/styles/globals.css";
 
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <Providers>
+        <body>{children}</body>
+      </Providers>
     </html>
   );
 }
