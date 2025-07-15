@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GENO TREE
 
-## Getting Started
+Приложение для создания своего семейного дерева
 
-First, run the development server:
+### Цели
+
+1. Демонстрация навыков.
+   > Приложение создано как showcase-проект для демонстрации моих технических и архитектурных навыков при отклике на вакансии.
+2. Попробовать возможности языка программирования [Golang](https://go.dev/).
+   > Golang выбран в первую очерелдь для его изучения, а так же для сравнения его с node js - в частности с фреймворком [NestJS](https://nestjs.com/)
+3. 3D визуализация.
+   > Всегда было желание пощуать 3D графику на базе js. Приложение с графами семейного дерева как раз для этого подходит.
+4. Для себя.
+   > Для создания собственного семейного дерева
+
+### Функционал
+
+- Регистрация/авторизация. Для персонализации данных каждого пользователя
+- Создания персон в семейном дереве и связей между ними
+- Возможность скачать дерево ввиде pdf документа
+
+## Frontend
+
+### Технологии и стэк
+
+- [Next JS 15.4](https://nextjs.org/blog/next-15)
+- [Three JS](https://threejs.org/)
+- [Docker](https://www.docker.com/)
+
+В приложени используется 3D на основе ThreeJS.
+
+### Разработка
+
+1. Скачать зависимости
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Запусить dev режим
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+   yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Линтинг
 
-## Learn More
+Проект настроен с ESLint и Prettier для поддержания качества кода:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Проверка кода
+yarn lint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Автоматическое исправление ошибок
+yarn lint:fix
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Строгая проверка (--max-warnings 0)
+yarn lint:strict
 
-## Deploy on Vercel
+# Форматирование кода
+yarn format
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Проверка форматирования
+yarn format:check
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Настроенные правила:**
+
+- TypeScript строгая типизация
+- React Hooks правила
+- Import сортировка и группировка
+- Accessibility (jsx-a11y)
+- Prettier форматирование
+
+## Backend можно посмотреть [тут](https://github.com/MaksimAndreevich/family_tree_server)
