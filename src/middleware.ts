@@ -34,5 +34,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/tree/:path*", WEB_ROUTES.login, WEB_ROUTES.register],
+  matcher: ["/tree/:path*", "/auth/login", "/auth/register"],
 };

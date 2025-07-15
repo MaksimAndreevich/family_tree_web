@@ -26,6 +26,8 @@
 - [Next JS 15.4](https://nextjs.org/blog/next-15)
 - [Three JS](https://threejs.org/)
 - [Docker](https://www.docker.com/)
+- [Tanstack Query 5.83](https://tanstack.com/query/latest/docs/framework/react/quick-start)
+- [MUI 7.2](https://mui.com/material-ui/getting-started/)
 
 В приложени используется 3D на основе ThreeJS.
 
