@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, CreateAxiosDefaults } from "axios";
 
-import { API_URL } from "../constants";
+import { NEXT_PUBLIC_API_URL } from "../constants";
 import { getAccessToken } from "../services/auth/token-processes";
 
 import { getContentType } from "./helper";
@@ -10,7 +10,7 @@ import { getContentType } from "./helper";
  * @type {CreateAxiosDefaults}
  */
 const options: CreateAxiosDefaults = {
-  baseURL: API_URL,
+  baseURL: NEXT_PUBLIC_API_URL,
   headers: getContentType(),
   withCredentials: true,
 };
