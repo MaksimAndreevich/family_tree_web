@@ -1,42 +1,36 @@
 "use client";
 
-import { useLogin } from "@/lib/hooks/queries/useLogin";
 import { Box, Button, Container, Divider, Link as MuiLink, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Form, Formik } from "formik";
 import Link from "next/link";
 import { useState } from "react";
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
+import * as Yup from "yup";
+
+import { useLogin } from "@/lib/hooks/queries/useLogin";
+
+// Схема валидации
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Введите корректный email").required("Email обязателен"),
+  password: Yup.string().min(1, "Пароль обязателен").required("Пароль обязателен"),
+});
+
+// Начальные значения
+const initialValues = {
+  email: "",
+  password: "",
+};
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const { login, isPending } = useLogin();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Валидация
-    const newErrors: Record<string, string> = {};
-    if (!formData.email) newErrors.email = "Email обязателен";
-    if (!formData.password) newErrors.password = "Пароль обязателен";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-
-    login({ email: formData.email, password: formData.password });
-  };
-
-  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }));
-    }
+  const handleSubmit = (values: typeof initialValues) => {
+    login({
+      email: values.email,
+      password: values.password,
+    });
   };
 
   return (
@@ -64,44 +58,52 @@ export default function LoginPage() {
             <Typography color="text.secondary">Войдите в свой аккаунт для доступа к семейному дереву</Typography>
           </Box>
 
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={3}>
-              <TextField
-                fullWidth
-                label="Email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange("email")}
-                error={!!errors.email}
-                helperText={errors.email}
-                InputProps={{
-                  startAdornment: <FaEnvelope style={{ marginRight: "8px", color: "#666" }} />,
-                }}
-              />
+          <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={handleSubmit}>
+            {({ values, errors, touched, handleChange, handleBlur, isValid, dirty }) => (
+              <Form>
+                <Stack spacing={3}>
+                  <TextField
+                    fullWidth
+                    name="email"
+                    label="Email"
+                    type="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.email && Boolean(errors.email)}
+                    helperText={touched.email && errors.email}
+                    InputProps={{
+                      startAdornment: <FaEnvelope style={{ marginRight: "8px", color: "#666" }} />,
+                    }}
+                  />
 
-              <TextField
-                fullWidth
-                label="Пароль"
-                type={showPassword ? "text" : "password"}
-                value={formData.password}
-                onChange={handleChange("password")}
-                error={!!errors.password}
-                helperText={errors.password}
-                InputProps={{
-                  startAdornment: <FaLock style={{ marginRight: "8px", color: "#666" }} />,
-                  endAdornment: (
-                    <Button onClick={() => setShowPassword(!showPassword)} sx={{ minWidth: "auto", p: 1 }}>
-                      {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </Button>
-                  ),
-                }}
-              />
+                  <TextField
+                    fullWidth
+                    name="password"
+                    label="Пароль"
+                    type={showPassword ? "text" : "password"}
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.password && Boolean(errors.password)}
+                    helperText={touched.password && errors.password}
+                    InputProps={{
+                      startAdornment: <FaLock style={{ marginRight: "8px", color: "#666" }} />,
+                      endAdornment: (
+                        <Button onClick={() => setShowPassword(!showPassword)} sx={{ minWidth: "auto", p: 1 }}>
+                          {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </Button>
+                      ),
+                    }}
+                  />
 
-              <Button type="submit" variant="contained" size="large" disabled={isPending} sx={{ mt: 2 }}>
-                {isPending ? "Вход..." : "Войти"}
-              </Button>
-            </Stack>
-          </form>
+                  <Button type="submit" variant="contained" size="large" disabled={isPending || !isValid || !dirty} sx={{ mt: 2 }}>
+                    {isPending ? "Вход..." : "Войти"}
+                  </Button>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
 
           <Divider sx={{ my: 3 }}>
             <Typography variant="body2" color="text.secondary">
