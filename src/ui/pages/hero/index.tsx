@@ -15,7 +15,7 @@ export const Hero = () => {
     <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
       <Box
         sx={{
-          background: (theme) => `linear-gradient(135deg, ${theme.palette.primary.main} 25%, ${theme.palette.secondary.main} 100%)`,
+          background: (theme) => theme.palette.background.default,
           color: "white",
           py: 8,
         }}

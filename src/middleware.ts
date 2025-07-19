@@ -4,8 +4,8 @@ import { WEB_ROUTES } from "./lib/routes";
 import { getAccessToken } from "./lib/services/auth/token-processes";
 
 export function middleware(request: NextRequest) {
-  const token = getAccessToken();
   const { pathname } = request.nextUrl;
+  const token = getAccessToken(request);
 
   // Если пользователь НЕ авторизован
   if (!token) {

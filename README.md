@@ -28,6 +28,8 @@
 - [Docker](https://www.docker.com/)
 - [Tanstack Query 5.83](https://tanstack.com/query/latest/docs/framework/react/quick-start)
 - [MUI 7.2](https://mui.com/material-ui/getting-started/)
+- [Formik](https://formik.org/)
+- [Yup](https://github.com/jquense/yup)
 
 В приложени используется 3D на основе ThreeJS.
 
